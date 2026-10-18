@@ -51,7 +51,7 @@ int add_free_memory_block(free_memory *FMB,
     return 0;
 }
 
-void *my_malloc(int size_n, int size_type){
+void *my_malloc_a(int size_n, int size_type){
 
 	extern free_memory My_free_memory;
 	

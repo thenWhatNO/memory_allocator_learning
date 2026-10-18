@@ -12,12 +12,12 @@ struct list {
 };
 
 void append(list *ls, int v){
-    uintptr_t i = (uintptr_t)syscall(SYS_brk, 0);
-    int o;
-    if ((o = syscall(SYS_brk, i+10)) < 0) return;
+    if(ls == NULL) return;
 
-    //printf("%p, ", i);
-    list *new_ob = (list*)&i;
+    long i = syscall(SYS_brk, 0);
+    if (syscall(SYS_brk, i + sizeof(list)) == -1) return;
+
+    list *new_ob = (list*)i;
 
     new_ob->value = v;
     new_ob->next_v = NULL;
@@ -38,11 +38,11 @@ int main(){
         mem = mem->next_v;
     }
 
-    // mem = NULL;
+    mem = NULL;
 
-    // for (mem = &my_list; mem != NULL ; mem = mem->next_v){
-    //     printf("%d, ", mem->value);
-    // }
+    for (mem = &my_list; mem != NULL ; mem = mem->next_v){
+        printf("%p, ", (uintptr_t*)mem+8);
+    }
 
     return 1;
 }
