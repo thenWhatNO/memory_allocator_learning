@@ -35,6 +35,17 @@ Free_Memory_slot *add_new_memory_slot(
                             Free_Memory_slot *prep_p
                         )
     {
+
     long new_slot = syscall(SYS_brk, 0);
-    if()
+    if(syscall(SYS_brk, new_slot + sizeof(Free_Memory_slot) + size) == -1){
+		return NULL;
+    }
+
+    Free_Memory_slot *FMS = (Free_Memory_slot*)new_slot;
+    
+    long data_p = new_slot + sizeof(Free_Memory_slot);
+
+	set_free_memory_slot(FMS, data_p, size, NULL, NULL);
+
+
 }
