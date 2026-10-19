@@ -3,11 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-// add -static flag while compling.
-
-void *my_malloc(int size_n, int size_t);
-
-#define ELI_MALLOC(n, type) ((type *)my_malloc(n, sizeof(type)))
+// add -static flag while compling. not working in termux
 
 typedef struct {
     uintptr_t str_p;
