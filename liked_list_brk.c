@@ -9,8 +9,11 @@ typedef struct list list;
 struct list {
     int value;
     list *next_v;
+    list *prev_v;
 };
 
+
+// create a new list at the end of the list chine
 void append(list *ls, int v){
     if(ls == NULL) return;
 
@@ -23,6 +26,12 @@ void append(list *ls, int v){
     new_ob->next_v = NULL;
 
     ls->next_v = new_ob;
+}
+
+void insert(list *ls, int v){
+    if(ls == NULL) return;
+
+    
 }
 
 int main(){

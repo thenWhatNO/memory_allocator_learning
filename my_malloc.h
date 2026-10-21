@@ -13,8 +13,13 @@ Free_Memory_slot *get_FMS_nextp(Free_Memory_slot *FMS);
 Free_Memory_slot *get_FMS_prepp(Free_Memory_slot *FMS);
 
 Free_Memory_slot *get_last_slot(Free_Memory_slot *FMS);
+Free_Memory_slot *find_free_FMS(Free_Memory_slot *FMS, int size);
 
 int init_central_FMS();
-Free_Memory_slot *add_new_memory_slot(int size, Free_Memory_slot *next_p, Free_Memory_slot *prep_p);
+
+Free_Memory_slot *alloc_FMS(long str_p, int Dstr_p, int size, int Dsize);
+
+void appand_memory_slot(Free_Memory_slot *cor_FMS, Free_Memory_slot *new_FMS); 
+void insert(Free_Memory_slot *cor_FMS, Free_Memory_slot *new_FMS);
 
 #endif
