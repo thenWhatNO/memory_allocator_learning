@@ -4,6 +4,7 @@
 typedef struct Free_Memory_slot Free_Memory_slot;
 
 void* my_malloc(int size_n, int size_type);
+void my_free(void* pointer);
 
 #define ELI_MALLOC(n, type) ((type *)my_malloc(n, sizeof(type)))
 
@@ -19,7 +20,7 @@ Free_Memory_slot *find_free_FMS(Free_Memory_slot *FMS, int size);
 
 int init_central_FMS();
 
-Free_Memory_slot *alloc_FMS(int size, int Dsize);
+Free_Memory_slot *alloc_FMS(int size);
 
 void appand_memory_slot(Free_Memory_slot *cor_FMS, Free_Memory_slot *new_FMS); 
 void insert_memory_slot(Free_Memory_slot *cor_FMS, Free_Memory_slot *new_FMS);

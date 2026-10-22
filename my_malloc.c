@@ -10,6 +10,7 @@ Free_Memory_slot *central_FMS;
 struct Free_Memory_slot {
     long point;
     int size;
+    int is_free; // 0 if used, 1 if free
     Free_Memory_slot *next_p;
     Free_Memory_slot *prep_p;
 };
@@ -47,16 +48,23 @@ Free_Memory_slot *find_free_FMS(Free_Memory_slot *FMS, int size){
 }
 
 void* my_malloc(int size_n, int size_type){
-    extern Free_Memory_slot *central_FMS;
-    int total_size = size_n + size_type;
-
-    
-    // addinf to that pravoase memory slot new slot
-    
-
-    // add the new slot to the old one
+    Free_Memory_slot *FMS = alloc_FMS(size+size_type);
+    if (FMS != NULL) return (void*)FMS->point;
 
     return NULL;
+}
+
+void my_free(void* pointer){
+    extern Free_Memory_slot *central_FMS;
+    Free_Memory_slot *fms;
+    for(fms = central_FMS; fms != NULL; fms = fms->next_p){
+        if (fms->point == (long)pointer) break;
+    }
+
+    // to free the space, i first need to set the size to its speace
+    fms->is_free = 1;
+    // nulling the pointer so the user want be able to use this pointer if he have a copy
+    fms->pointer = 0;
 }
 
 int std_size(int size){
@@ -68,7 +76,7 @@ int std_size(int size){
     return -1;
 }
 
-Free_Memory_slot *alloc_FMS(int size, int Dsize){
+Free_Memory_slot *alloc_FMS(int size){
     extern Free_Memory_slot *central_FMS;
     long end_heap = syscall(SYS_brk, 0);
 
@@ -113,7 +121,8 @@ Free_Memory_slot *alloc_FMS(int size, int Dsize){
     ret_data:
 
     new_FMS->point = (long)new_FMS + sizeof(Free_Memory_slot);
-    new_FMS->size = 0;
+    new_FMS->size = size;
+    new_FMS->is_free = 0;
 
     return new_FMS;
 }
